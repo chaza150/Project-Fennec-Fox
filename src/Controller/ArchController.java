@@ -8,6 +8,9 @@ public class ArchController extends Controller{
     public ModelController modelController;
     public InteractionController interactionController;
 
+    long previousUpdateTime = 0;
+    public int deltaTime = 0;
+
     public ArchController(){
         this.viewController = new ViewController(this);
         this.interactionController = new InteractionController(this);
@@ -21,8 +24,19 @@ public class ArchController extends Controller{
     }
 
     public void update(){
+        updateTime();
         this.viewController.update();
         this.modelController.update();
         this.interactionController.update();
+    }
+
+    public void updateTime(){
+        if(previousUpdateTime == 0){
+            deltaTime = 0;
+            previousUpdateTime = System.currentTimeMillis();
+        } else {
+            deltaTime = (int)(System.currentTimeMillis() - previousUpdateTime);
+            previousUpdateTime = System.currentTimeMillis();
+        }
     }
 }

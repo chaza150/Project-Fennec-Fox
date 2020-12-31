@@ -17,8 +17,5 @@ public class InteractionController extends Controller{
     @Override
     public void update() {
         keyboardInteraction.update();
-        if(keyboardInteraction.wasKeyTyped('t')){
-            System.out.println("t");
-        }
     }
 }

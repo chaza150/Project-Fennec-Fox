@@ -13,7 +13,7 @@ public class Canvas extends JPanel {
 
     public Canvas(ViewController viewController){
         this.viewController = viewController;
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.BLUE);
     }
 
     public void setGraphicsController(GraphicsController graphicsController) {
