@@ -8,6 +8,8 @@ public class AnimationComponent extends TransitionComponent{
 
     public AnimationComponent(Animation activeAnimation){
         super(ComponentType.ANIMATION, activeAnimation);
+
+        this.setPrerequisites(ComponentType.TIMING);
     }
 
 }

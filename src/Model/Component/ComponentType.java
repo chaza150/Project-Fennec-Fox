@@ -8,6 +8,7 @@ public enum ComponentType {
     GRAPHICS, // zIndex, painter
     PLAYER_CONTROL,
     TIMING, // deltaTime
-    ANIMATION // activeTransition
+    ANIMATION, // activeTransition
+    COLLIDER // collisionCheck, collisionResponse
 
 }

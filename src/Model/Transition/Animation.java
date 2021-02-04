@@ -59,7 +59,7 @@ public class Animation extends TransitionGraph {
     public Animation setLooping(boolean looping){
         this.looping = looping;
         if(looping){
-            PassageAction timeResetAction = new PassageAction(e -> this.animationRunTime = 0, this.rootNode);
+            PassageAction timeResetAction = new PassageAction(e -> this.animationRunTime = this.animationRunTime - keyframeTimes.get(keyframeTimes.size() - 1), this.rootNode);
             ((PassageAction)nodes.get(nodes.size()-1)).addResultantNode(timeResetAction);
         } else {
             ((PassageAction)nodes.get(nodes.size()-1)).addResultantNode(null);

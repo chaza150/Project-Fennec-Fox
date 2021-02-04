@@ -27,13 +27,13 @@ public class PlayerEntity extends Entity{
 
         addComponent(new AnimationComponent(new Animation()
                 .addFrame(1000, e -> e.getComponent(ComponentType.VELOCITY).apply("x", velX -> 200f))
-                .addFrame(1000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getGraphics(Color.MAGENTA)))
+                .addFrame(1000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.MAGENTA)))
                 .addFrame(2000, e -> e.getComponent(ComponentType.VELOCITY).apply("x", velX -> -200f))
-                .addFrame(2000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getGraphics(Color.CYAN)))
+                .addFrame(2000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.CYAN)))
                 .setLooping(true)));
     }
 
-    public Consumer<Graphics> getGraphics(Color color){
+    public Consumer<Graphics> getPainter(Color color){
         return g -> {
             g.setColor(color);
             Component position = getComponent(ComponentType.POSITION);

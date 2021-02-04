@@ -13,8 +13,7 @@ public class AnimationSystem extends System {
     public AnimationSystem(SystemManager sysManager) {
         super(sysManager, SystemType.ANIMATION);
 
-        setPrerequisites(SystemType.GRAPHICS);
-        setInitPrerequisites(SystemType.GRAPHICS);
+        setPrerequisites(SystemType.GRAPHICS, SystemType.TIMING);
     }
 
     @Override
