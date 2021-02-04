@@ -1,15 +1,14 @@
 package Launch;
 
-import Controller.ArchController;
-import View.Window;
+import Controller.SystemManager;
 
 public class Launch {
 
     public static void main(String[] args) throws InterruptedException {
-        ArchController archController = new ArchController();
-        archController.init();
+        SystemManager sysManager = new SystemManager();
+        sysManager.init();
         while(true){
-            archController.update();
+            sysManager.update();
         }
     }
 }

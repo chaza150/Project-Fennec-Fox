@@ -10,4 +10,6 @@ public class Settings {
 
     public static int TYPE_WINDOW_MILLIS = 200;
 
+    public static int PHYSICS_UPDATE_TIME = 16;
+
 }

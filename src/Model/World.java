@@ -1,8 +1,11 @@
 package Model;
 
-import Controller.Model.ModelController;
+import Controller.System.ModelSystem;
+import Model.Component.Component;
+import Model.Component.ComponentType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -10,17 +13,13 @@ import java.util.stream.Collectors;
 public class World {
 
     ArrayList<Entity> entities;
-    ModelController modelController;
+    ModelSystem modelSystem;
 
-    public World(ModelController modelController){
+    HashMap<ComponentType, HashMap<Entity, Component>> components = new HashMap<>();
+
+    public World(ModelSystem modelSystem){
         entities = new ArrayList<>();
-        this.modelController = modelController;
-    }
-
-    public void update(){
-        for(Entity entity : entities){
-            entity.update(this.modelController);
-        }
+        this.modelSystem = modelSystem;
     }
 
     public ArrayList<Entity> getEntities(){
@@ -41,5 +40,19 @@ public class World {
 
     public List<Entity> findEntitiesByPredicate(Predicate<? super Entity> predicate){
         return entities.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    public void addComponent(Entity entity, Component component){
+        if(components.containsKey(component.getComponentType())){
+            components.get(component.getComponentType()).put(entity, component);
+        } else {
+            HashMap<Entity, Component> componentHashMap = new HashMap<>();
+            componentHashMap.put(entity, component);
+            components.put(component.getComponentType(), componentHashMap);
+        }
+    }
+
+    public HashMap<Entity, Component> getComponents(ComponentType type){
+        return components.get(type);
     }
 }

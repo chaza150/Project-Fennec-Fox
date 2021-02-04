@@ -1,27 +1,27 @@
 package View;
 
-import Controller.GraphicsController;
-import Controller.ViewController;
+import Controller.System.GraphicsSystem;
+import Controller.System.ViewSystem;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
 
-    ViewController viewController;
-    GraphicsController graphicsController;
+    ViewSystem viewSystem;
+    GraphicsSystem graphicsSystem;
 
-    public Canvas(ViewController viewController){
-        this.viewController = viewController;
+    public Canvas(ViewSystem viewSystem){
+        this.viewSystem = viewSystem;
         this.setBackground(Color.BLUE);
     }
 
-    public void setGraphicsController(GraphicsController graphicsController) {
-        this.graphicsController = graphicsController;
+    public void setGraphicsSystem(GraphicsSystem graphicsSystem) {
+        this.graphicsSystem = graphicsSystem;
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        graphicsController.paint(g);
+        graphicsSystem.paint(g);
     }
 }
