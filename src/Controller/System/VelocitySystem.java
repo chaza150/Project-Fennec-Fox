@@ -18,8 +18,7 @@ public class VelocitySystem extends System{
         super(sysManager, SystemType.VELOCITY);
 
         setPrerequisites(SystemType.MODEL);
-        setInitPrerequisites(SystemType.MODEL);
-        setUpdatePrerequisites(SystemType.MODEL);
+        setUpdatePrerequisites(SystemType.MODEL, SystemType.PLAYER_CONTROL, SystemType.TIMING);
 
         this.updateTime = updateTime;
     }

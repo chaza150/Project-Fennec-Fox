@@ -16,9 +16,8 @@ public class PlayerControlSystem extends System{
     public PlayerControlSystem(SystemManager sysManager, int updateTime) {
         super(sysManager, SystemType.PLAYER_CONTROL);
 
-        setPrerequisites(SystemType.VELOCITY);
-        setInitPrerequisites(SystemType.VELOCITY);
-        setUpdatePrerequisites(SystemType.VELOCITY);
+        setPrerequisites(SystemType.VELOCITY, SystemType.INTERACTION);
+        setUpdatePrerequisites(SystemType.INTERACTION);
 
         this.updateTime = updateTime;
     }

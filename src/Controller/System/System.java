@@ -12,8 +12,11 @@ public abstract class System {
     SystemManager sysManager;
     SystemType type;
 
+    //What other systems need to exist
     SystemType[] prerequisites = {};
+    //What other systems need to have already been initialised
     SystemType[] initPrerequisites = {};
+    //What other systems need to already have been updated
     SystemType[] updatePrerequisites = {};
 
     public System(SystemManager sysManager, SystemType type){

@@ -25,6 +25,7 @@ public class ModelSystem extends System{
     }
 
     private void fillWorld() {
-        world.addEntity(new PlayerEntity(world, "player_1", 20, 20));
+        world.addEntity(new PlayerEntity(world, "player_1", 20, 120, 1));
+        world.addEntity(new PlayerEntity(world, "player_2", 100, 40, 2));
     }
 }

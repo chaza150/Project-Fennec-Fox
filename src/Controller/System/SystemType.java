@@ -8,5 +8,6 @@ public enum SystemType{
     MODEL,
     PLAYER_CONTROL,
     TIMING,
-    ANIMATION
+    ANIMATION,
+    COLLISION
 }

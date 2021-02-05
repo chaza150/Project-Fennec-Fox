@@ -20,6 +20,7 @@ public class SystemManager {
         addSystem(new PlayerControlSystem(this, Settings.PHYSICS_UPDATE_TIME));
         addSystem(new TimingSystem(this));
         addSystem(new AnimationSystem(this));
+        addSystem(new CollisionSystem(this));
     }
 
     public void init(){

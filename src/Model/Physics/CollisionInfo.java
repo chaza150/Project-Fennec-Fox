@@ -11,4 +11,12 @@ public class CollisionInfo {
         this.collider1 = collider1;
         this.collider2 = collider2;
     }
+
+    public Collider getCollider1() {
+        return collider1;
+    }
+
+    public Collider getCollider2(){
+        return collider2;
+    }
 }

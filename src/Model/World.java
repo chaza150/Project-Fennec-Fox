@@ -52,7 +52,7 @@ public class World {
         }
     }
 
-    public HashMap<Entity, Component> getComponents(ComponentType type){
-        return components.get(type);
+    public <T extends Component> HashMap<Entity, T> getComponents(ComponentType type){
+        return (HashMap<Entity, T>)components.get(type);
     }
 }

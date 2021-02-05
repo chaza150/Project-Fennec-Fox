@@ -1,5 +1,6 @@
 package Model.Physics.Collider;
 
 public enum ColliderType {
-    RECTANGLE
+    RECTANGLE, // width, height
+    CIRCLE // radius
 }

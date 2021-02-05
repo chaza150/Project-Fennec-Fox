@@ -9,6 +9,6 @@ public enum ComponentType {
     PLAYER_CONTROL,
     TIMING, // deltaTime
     ANIMATION, // activeTransition
-    COLLIDER // collisionCheck, collisionResponse
+    COLLIDER // collider, collisionResponse
 
 }
