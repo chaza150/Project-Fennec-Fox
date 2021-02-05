@@ -23,7 +23,9 @@ public class TimingSystem extends System{
         prevUpdateTime = currentTime;
 
         HashMap<Entity, Component> timingComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.TIMING);
-        timingComponents.values().stream().forEach(e -> e.setProperty("deltaTime", deltaTime));
+        if(timingComponents.size() > 0) {
+            timingComponents.values().stream().forEach(e -> e.setProperty("deltaTime", deltaTime));
+        }
     }
 
     @Override

@@ -53,6 +53,10 @@ public class World {
     }
 
     public <T extends Component> HashMap<Entity, T> getComponents(ComponentType type){
-        return (HashMap<Entity, T>)components.get(type);
+        if(components.containsKey(type)){
+            return (HashMap<Entity, T>)components.get(type);
+        } else {
+            return new HashMap<>();
+        }
     }
 }

@@ -16,8 +16,8 @@ public class PlayerControlSystem extends System{
     public PlayerControlSystem(SystemManager sysManager, int updateTime) {
         super(sysManager, SystemType.PLAYER_CONTROL);
 
-        setPrerequisites(SystemType.VELOCITY, SystemType.INTERACTION);
-        setUpdatePrerequisites(SystemType.INTERACTION);
+        setPrerequisites(SystemType.VELOCITY, SystemType.INTERACTION, SystemType.TIMING);
+        setUpdatePrerequisites(SystemType.INTERACTION, SystemType.TIMING);
 
         this.updateTime = updateTime;
     }
@@ -26,26 +26,27 @@ public class PlayerControlSystem extends System{
     public void update() {
         long currentTime = java.lang.System.currentTimeMillis();
         if((currentTime - lastUpdateTime) > updateTime) {
-            HashMap<Entity, Component> velocityComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.VELOCITY);
-            for (Entity entity : velocityComponents.keySet()) {
+            HashMap<Entity, Component> playerControlComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.PLAYER_CONTROL);
+            for (Entity entity : playerControlComponents.keySet()) {
 
                 KeyboardInteraction keyboardInteraction = sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).keyboardInteraction;
 
-                Component velocityComponent = velocityComponents.get(entity);
+                Component velocityComponent = entity.getComponent(ComponentType.VELOCITY);
 
-                float acceleration = 0.04f;
+                float acceleration = 0.2f;
+                int deltaTime = entity.getComponent(ComponentType.TIMING).getProperty("deltaTime");
 
                 if (keyboardInteraction.isKeyDown('w')) {
-                    velocityComponent.apply("y", e -> (float) e - acceleration);
+                    velocityComponent.apply("y", e -> (float) e - acceleration * deltaTime);
                 }
                 if (keyboardInteraction.isKeyDown('s')) {
-                    velocityComponent.apply("y", e -> (float) e + acceleration);
+                    velocityComponent.apply("y", e -> (float) e + acceleration * deltaTime);
                 }
                 if (keyboardInteraction.isKeyDown('a')) {
-                    velocityComponent.apply("x", e -> (float) e - acceleration);
+                    velocityComponent.apply("x", e -> (float) e - acceleration * deltaTime);
                 }
                 if (keyboardInteraction.isKeyDown('d')) {
-                    velocityComponent.apply("x", e -> (float) e + acceleration);
+                    velocityComponent.apply("x", e -> (float) e + acceleration * deltaTime);
                 }
             }
         }

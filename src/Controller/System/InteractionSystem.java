@@ -1,12 +1,14 @@
 package Controller.System;
 
 import Controller.Interaction.KeyboardInteraction;
+import Controller.Interaction.MouseInteraction;
 import Controller.Settings;
 import Controller.SystemManager;
 
 public class InteractionSystem extends System{
 
     public KeyboardInteraction keyboardInteraction;
+    public MouseInteraction mouseInteraction;
 
     public InteractionSystem(SystemManager sysManager){
         super(sysManager, SystemType.INTERACTION);
@@ -15,6 +17,7 @@ public class InteractionSystem extends System{
         setUpdatePrerequisites(SystemType.VIEW);
 
         this.keyboardInteraction = new KeyboardInteraction(Settings.TYPE_WINDOW_MILLIS);
+        this.mouseInteraction = new MouseInteraction();
     }
 
     public void init(){}

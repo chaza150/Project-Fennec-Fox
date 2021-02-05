@@ -13,12 +13,12 @@ public class SystemManager {
 
     public SystemManager(){
         addSystem(new ModelSystem(this));
+        addSystem(new TimingSystem(this));
         addSystem(new ViewSystem(this));
-        addSystem(new GraphicsSystem(this));
         addSystem(new InteractionSystem(this));
+        addSystem(new GraphicsSystem(this));
         addSystem(new VelocitySystem(this, Settings.PHYSICS_UPDATE_TIME));
         addSystem(new PlayerControlSystem(this, Settings.PHYSICS_UPDATE_TIME));
-        addSystem(new TimingSystem(this));
         addSystem(new AnimationSystem(this));
         addSystem(new CollisionSystem(this));
     }

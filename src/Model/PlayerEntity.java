@@ -20,10 +20,12 @@ public class PlayerEntity extends Entity{
 
         addComponent(new GraphicsComponent(0, getPainter(Color.GREEN)));
 
-        addComponent(new PlayerControlComponent());
+        if(number == 1) {
+            addComponent(new PlayerControlComponent());
+        }
         addComponent(new TimingComponent());
 
-        if(number == 1) {
+        /*if(number == 1) {
             addComponent(new AnimationComponent(new Animation()
                     .addFrame(1000, e -> e.getComponent(ComponentType.VELOCITY).apply("x", velX -> 200f))
                     .addFrame(1000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.MAGENTA)))
@@ -37,7 +39,7 @@ public class PlayerEntity extends Entity{
                     .addFrame(2000, e -> e.getComponent(ComponentType.VELOCITY).apply("y", velY -> -200f))
                     .addFrame(2000, e -> e.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.GREEN)))
                     .setLooping(true)));
-        }
+        }*/
 
         addComponent(new ColliderComponent(new CircleCollider(this, 50), collisionInfo -> {
             this.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.RED));

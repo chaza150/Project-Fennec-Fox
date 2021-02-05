@@ -24,26 +24,28 @@ public class CollisionSystem extends System{
     @Override
     public void update() {
         HashMap<Entity, ColliderComponent> colliderComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.COLLIDER);
-        Set<Collider> colliders = colliderComponents.values().stream().map(colliderComp -> colliderComp.<Collider>getProperty("collider")).collect(Collectors.toSet());
-        Set<Collider> collidersToCheck = new HashSet<>();
-        collidersToCheck.addAll(colliders);
+        if(colliderComponents.size() > 1) {
+            Set<Collider> colliders = colliderComponents.values().stream().map(colliderComp -> colliderComp.<Collider>getProperty("collider")).collect(Collectors.toSet());
+            Set<Collider> collidersToCheck = new HashSet<>();
+            collidersToCheck.addAll(colliders);
 
-        Set<CollisionInfo> collisions = new HashSet<>();
-        for (Collider collider : colliders) {
-            for(Collider otherCollider : collidersToCheck){
-                if(collider.collidesWith(otherCollider) && otherCollider != collider){
-                    collisions.add(new CollisionInfo(collider, otherCollider));
+            Set<CollisionInfo> collisions = new HashSet<>();
+            for (Collider collider : colliders) {
+                for (Collider otherCollider : collidersToCheck) {
+                    if (collider.collidesWith(otherCollider) && otherCollider != collider) {
+                        collisions.add(new CollisionInfo(collider, otherCollider));
+                    }
                 }
+                collidersToCheck.remove(collider);
             }
-            collidersToCheck.remove(collider);
-        }
 
-        //TODO: Implement Proper Collisions Simultaneously (Where collider response relies upon changing properties of other entity)
+            //TODO: Implement Proper Collisions Simultaneously (Where collider response relies upon changing properties of other entity)
 
-        for(CollisionInfo collisionInfo : collisions){
-            //java.lang.System.out.println("Collision Between: " + collisionInfo.getCollider1().getEntity().getID() + " AND " + collisionInfo.getCollider2().getEntity().getID());
-            colliderComponents.get(collisionInfo.getCollider1().getEntity()).<Consumer<CollisionInfo>>getProperty("collisionResponse").accept(collisionInfo);
-            colliderComponents.get(collisionInfo.getCollider2().getEntity()).<Consumer<CollisionInfo>>getProperty("collisionResponse").accept(collisionInfo);
+            for (CollisionInfo collisionInfo : collisions) {
+                //java.lang.System.out.println("Collision Between: " + collisionInfo.getCollider1().getEntity().getID() + " AND " + collisionInfo.getCollider2().getEntity().getID());
+                colliderComponents.get(collisionInfo.getCollider1().getEntity()).<Consumer<CollisionInfo>>getProperty("collisionResponse").accept(collisionInfo);
+                colliderComponents.get(collisionInfo.getCollider2().getEntity()).<Consumer<CollisionInfo>>getProperty("collisionResponse").accept(collisionInfo);
+            }
         }
     }
 

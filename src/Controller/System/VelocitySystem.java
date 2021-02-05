@@ -25,16 +25,12 @@ public class VelocitySystem extends System{
 
     @Override
     public void update() {
-        long currentTime = java.lang.System.currentTimeMillis();
-        int deltaTime = (int)(currentTime - lastUpdateTime);
-        if(deltaTime > updateTime) {
-            lastUpdateTime = currentTime;
             HashMap<Entity, Component> velocityComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.VELOCITY);
             for (Entity entity : velocityComponents.keySet()) {
+                int deltaTime = entity.getComponent(ComponentType.TIMING).getProperty("deltaTime");
                 entity.getComponent(ComponentType.POSITION).apply("x", e -> (float) e + velocityComponents.get(entity).<Float>getProperty("x") * ((float)(deltaTime)/1000f));
                 entity.getComponent(ComponentType.POSITION).apply("y", e -> (float) e + velocityComponents.get(entity).<Float>getProperty("y") * ((float)(deltaTime)/1000f));
             }
-        }
     }
 
     @Override
