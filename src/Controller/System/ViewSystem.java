@@ -30,5 +30,8 @@ public class ViewSystem extends System {
         this.window.setVisible(true);
         this.canvas.setFocusable(true);
         this.canvas.addKeyListener(sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).keyboardInteraction);
+        this.canvas.addMouseListener(sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).mouseInteraction);
+        this.canvas.addMouseMotionListener(sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).mouseInteraction);
+        this.canvas.addMouseWheelListener(sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).mouseInteraction);
     }
 }

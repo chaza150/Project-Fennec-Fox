@@ -25,6 +25,7 @@ public class InteractionSystem extends System{
     @Override
     public void update() {
         keyboardInteraction.update();
+        mouseInteraction.update();
     }
 
 }
