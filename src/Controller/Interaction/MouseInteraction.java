@@ -1,15 +1,14 @@
 package Controller.Interaction;
 
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MouseInteraction implements MouseListener, MouseMotionListener, MouseWheelListener {
 
-    boolean mouseDown = false;
+    ConcurrentHashMap<Integer, Boolean> buttonsDown = new ConcurrentHashMap<>();
     boolean mousePresent = false;
 
     ConcurrentLinkedQueue<MouseEvent> mouseClicks = new ConcurrentLinkedQueue<>();
@@ -22,32 +21,32 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
     Point mouseDragOrigin = null;
     Point mouseDragDistance = null;
 
+    public MouseInteraction(){
+        buttonsDown.put(MouseEvent.BUTTON1, false);
+        buttonsDown.put(MouseEvent.BUTTON2, false);
+        buttonsDown.put(MouseEvent.BUTTON3, false);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         mousePresent = true;
         mouseClicks.add(e);
-
         currentMouseCoords = e.getPoint();
-
-        System.out.println("Mouse Clicked");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseDown = true;
+        buttonsDown.put(e.getButton(), true);
         currentMouseCoords.setLocation(e.getX(), e.getY());
         mouseDragDistance = new Point(0,0);
         mouseDragOrigin = e.getPoint();
-
-        System.out.println("Mouse Pressed");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         mousePresent = true;
-        mouseDown = false;
+        buttonsDown.put(e.getButton(), false);
         currentMouseCoords = e.getPoint();
-        System.out.println("Mouse Released");
 
     }
 
@@ -65,25 +64,24 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
     @Override
     public void mouseDragged(MouseEvent e) {
         dragged = true;
-        if(mouseDragOrigin == null){
-            mouseDragOrigin = e.getPoint();
+        synchronized (this) {
+            if (mouseDragOrigin == null) {
+                mouseDragOrigin = e.getPoint();
+            }
+            mouseDragDistance = new Point((int) (e.getX() - mouseDragOrigin.getX()), (int) (e.getY() - mouseDragOrigin.getY()));
         }
-        mouseDragDistance = new Point((int)(e.getX()-mouseDragOrigin.getX()), (int)(e.getY()-mouseDragOrigin.getY()));
         currentMouseCoords = e.getPoint();
-        System.out.println("Mouse Dragged");
 
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        System.out.println("Mouse Moved");
         currentMouseCoords = e.getPoint();
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         mouseWheelEvents.add(e);
-        System.out.println("Mouse Wheel Event");
     }
 
     public ArrayList<MouseEvent> getMouseClicks(){
@@ -102,8 +100,8 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
         return dragged;
     }
 
-    public boolean isMouseDown(){
-        return mouseDown;
+    public boolean isMouseButtonDown(int buttonIndex){
+        return buttonsDown.get(buttonIndex);
     }
 
     public boolean isMousePresent(){
@@ -118,7 +116,9 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
         mouseClicks = new ConcurrentLinkedQueue<>();
         mouseWheelEvents = new ConcurrentLinkedQueue<>();
         dragged = false;
-        mouseDragOrigin = null;
+        synchronized (this) {
+            mouseDragOrigin = null;
+        }
         mouseDragDistance = null;
     }
 
