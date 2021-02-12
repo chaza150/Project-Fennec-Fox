@@ -9,5 +9,5 @@ public enum SystemType{
     PLAYER_CONTROL,
     TIMING,
     ANIMATION,
-    COLLISION
+    COLLISION,
 }

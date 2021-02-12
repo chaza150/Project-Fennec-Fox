@@ -4,6 +4,12 @@ import Controller.Interaction.KeyboardInteraction;
 import Controller.Interaction.MouseInteraction;
 import Controller.Settings;
 import Controller.SystemManager;
+import Model.Component.ComponentType;
+import Model.Component.MouseEventComponent;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class InteractionSystem extends System{
 
@@ -24,6 +30,13 @@ public class InteractionSystem extends System{
 
     @Override
     public void update() {
+
+        Collection<MouseEventComponent> mouseEventComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.<MouseEventComponent>getComponents(ComponentType.MOUSE_EVENT).values();
+
+        for(MouseEventComponent mouseComponent : mouseEventComponents){
+            mouseComponent.<Consumer<MouseInteraction>>getProperty("mouseResponse").accept(mouseInteraction);
+        }
+
         keyboardInteraction.update();
         mouseInteraction.update();
     }

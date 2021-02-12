@@ -14,8 +14,8 @@ public class PlayerEntity extends Entity{
     float acceleration = 0.1f;
     int radius = 0;
 
-    public PlayerEntity(World world, String playerID, int x, int y, int number, int radius){
-        super(world, playerID);
+    public PlayerEntity(World world, String entityID, int x, int y, int number, int radius){
+        super(world, entityID);
         this.radius = radius;
         addComponent(new PositionComponent(x,y));
         addComponent(new VelocityComponent(0,0));
@@ -45,6 +45,9 @@ public class PlayerEntity extends Entity{
 
         addComponent(new ColliderComponent(new CircleCollider(this, radius), collisionInfo -> {
             this.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.RED));
+            if(!this.hasComponent(ComponentType.PLAYER_CONTROL)){
+                this.removeComponent(ComponentType.COLLIDER);
+            }
             //this.getComponent(ComponentType.VELOCITY).apply("x", velX -> 0f);
             //this.getComponent(ComponentType.VELOCITY).apply("y", velY -> 0f);
         }));

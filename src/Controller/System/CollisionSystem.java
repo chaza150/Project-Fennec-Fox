@@ -29,35 +29,32 @@ public class CollisionSystem extends System{
             Set<Collider> colliders = colliderComponents.values().stream().map(colliderComp -> colliderComp.<Collider>getProperty("collider")).collect(Collectors.toSet());
 
             //vvTO BE REMOVED OR MADE OPTIONALvv
-            Set<Collider> collidersToCheck = new HashSet<>();
-            collidersToCheck.addAll(colliders);
-
-            int collisionsCheckedOld = 0;
-            for (Collider collider : colliders) {
-                for (Collider otherCollider : collidersToCheck) {
-                    collisionsCheckedOld++;
-                    if (collider.collidesWith(otherCollider) && otherCollider != collider) {
-                    }
-                }
-                collidersToCheck.remove(collider);
-            }
-
-            java.lang.System.out.println("Collisions Checked (OLD): " + collisionsCheckedOld);
+//            Set<Collider> collidersToCheck = new HashSet<>();
+//            collidersToCheck.addAll(colliders);
+//
+//            int collisionsCheckedOld = 0;
+//            for (Collider collider : colliders) {
+//                for (Collider otherCollider : collidersToCheck) {
+//                    collisionsCheckedOld++;
+//                    if (collider.collidesWith(otherCollider) && otherCollider != collider) {
+//                    }
+//                }
+//                collidersToCheck.remove(collider);
+//            }
+//
+//            java.lang.System.out.println("Collisions Checked (OLD): " + collisionsCheckedOld);
             //^^TO BE REMOVED OR MADE OPTIONAL^^
 
-            BoundingVolume bv = new BoundingVolume(colliders, 1);
+            BoundingVolume bv = new BoundingVolume(colliders, 2);
             Set<CollisionInfo> potentialCollisions = bv.getPotentialCollisions();
 
             Set<CollisionInfo> collisions = new HashSet<>();
 
-            java.lang.System.out.println("Collisions Checked (NEW): " + potentialCollisions.size());
             for(CollisionInfo potentialCollision : potentialCollisions){
                 if(potentialCollision.getCollider1().collidesWith(potentialCollision.getCollider2())){
                     collisions.add(potentialCollision);
                 }
             }
-
-            //TODO: Implement Proper Collisions Simultaneously (Where collider response relies upon changing properties of other entity)
 
             for (CollisionInfo collisionInfo : collisions) {
                 //java.lang.System.out.println("Collision Between: " + collisionInfo.getCollider1().getEntity().getID() + " AND " + collisionInfo.getCollider2().getEntity().getID());
