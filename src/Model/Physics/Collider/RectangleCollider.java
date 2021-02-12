@@ -4,6 +4,8 @@ import Model.Component.ComponentType;
 import Model.Component.PositionComponent;
 import Model.Entity;
 
+import java.awt.*;
+
 public class RectangleCollider extends Collider{
 
     float width;
@@ -36,5 +38,11 @@ public class RectangleCollider extends Collider{
         });
         this.width = width;
         this.height = height;
+    }
+
+    @Override
+    public Rectangle getBoundingRectangle(){
+        PositionComponent positionComponent = getEntity().getComponent(ComponentType.POSITION);
+        return new Rectangle(positionComponent.getProperty("x"), positionComponent.getProperty("y"), (int)width, (int)height);
     }
 }

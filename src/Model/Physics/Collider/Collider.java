@@ -2,9 +2,10 @@ package Model.Physics.Collider;
 
 import Model.Entity;
 
+import java.awt.*;
 import java.util.function.Predicate;
 
-public class Collider {
+public abstract class Collider {
 
     Predicate<Collider> collisionCheck;
     ColliderType colliderType;
@@ -36,4 +37,6 @@ public class Collider {
     public Entity getEntity(){
         return parentEntity;
     }
+
+    public abstract Rectangle getBoundingRectangle();
 }

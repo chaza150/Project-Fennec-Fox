@@ -4,6 +4,8 @@ import Model.Component.ComponentType;
 import Model.Component.PositionComponent;
 import Model.Entity;
 
+import java.awt.*;
+
 public class CircleCollider extends Collider{
 
     float radius;
@@ -37,6 +39,12 @@ public class CircleCollider extends Collider{
 
         });
         this.radius = radius;
+    }
+
+    @Override
+    public Rectangle getBoundingRectangle(){
+        PositionComponent positionComponent = getEntity().getComponent(ComponentType.POSITION);
+        return new Rectangle((int)(positionComponent.<Float>getProperty("x")-radius-1), (int)(positionComponent.<Float>getProperty("y")-radius-1), (int)(radius*2), (int)(radius*2));
     }
 
 }

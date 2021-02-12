@@ -12,9 +12,11 @@ import java.util.function.Consumer;
 public class PlayerEntity extends Entity{
 
     float acceleration = 0.1f;
+    int radius = 0;
 
-    public PlayerEntity(World world, String playerID, int x, int y, int number){
+    public PlayerEntity(World world, String playerID, int x, int y, int number, int radius){
         super(world, playerID);
+        this.radius = radius;
         addComponent(new PositionComponent(x,y));
         addComponent(new VelocityComponent(0,0));
 
@@ -41,7 +43,7 @@ public class PlayerEntity extends Entity{
                     .setLooping(true)));
         }*/
 
-        addComponent(new ColliderComponent(new CircleCollider(this, 50), collisionInfo -> {
+        addComponent(new ColliderComponent(new CircleCollider(this, radius), collisionInfo -> {
             this.getComponent(ComponentType.GRAPHICS).apply("painter", p -> getPainter(Color.RED));
             //this.getComponent(ComponentType.VELOCITY).apply("x", velX -> 0f);
             //this.getComponent(ComponentType.VELOCITY).apply("y", velY -> 0f);
@@ -52,7 +54,7 @@ public class PlayerEntity extends Entity{
         return g -> {
             g.setColor(color);
             Component position = getComponent(ComponentType.POSITION);
-            g.fillOval(position.<Float>getProperty("x").intValue()-50, position.<Float>getProperty("y").intValue()-50, 100, 100);
+            g.fillOval(position.<Float>getProperty("x").intValue()-this.radius, position.<Float>getProperty("y").intValue()-this.radius, radius*2, radius*2);
         };
     }
 }
