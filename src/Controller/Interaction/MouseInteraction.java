@@ -12,8 +12,10 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
     boolean mousePresent = false;
 
     ConcurrentLinkedQueue<MouseEvent> mouseClicks = new ConcurrentLinkedQueue<>();
+    ConcurrentLinkedQueue<MouseEvent> lastFrameMouseClicks = new ConcurrentLinkedQueue<>();
 
     ConcurrentLinkedQueue<MouseWheelEvent> mouseWheelEvents = new ConcurrentLinkedQueue<>();
+    ConcurrentLinkedQueue<MouseWheelEvent> lastFrameMouseWheelEvents = new ConcurrentLinkedQueue<>();
 
     Point currentMouseCoords = new Point(0, 0);
 
@@ -30,7 +32,9 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
     @Override
     public void mouseClicked(MouseEvent e) {
         mousePresent = true;
-        mouseClicks.add(e);
+        synchronized (this){
+            mouseClicks.add(e);
+        }
         currentMouseCoords = e.getPoint();
     }
 
@@ -81,15 +85,17 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        mouseWheelEvents.add(e);
+        synchronized (this) {
+            mouseWheelEvents.add(e);
+        }
     }
 
     public ArrayList<MouseEvent> getMouseClicks(){
-        return new ArrayList<>(mouseClicks);
+        return new ArrayList<>(lastFrameMouseClicks);
     }
 
     public ArrayList<MouseWheelEvent> getMouseWheelEvents(){
-        return new ArrayList<>(mouseWheelEvents);
+        return new ArrayList<>(lastFrameMouseWheelEvents);
     }
 
     public Point getCurrentMouseCoords(){
@@ -113,12 +119,24 @@ public class MouseInteraction implements MouseListener, MouseMotionListener, Mou
     }
 
     public void update(){
-        mouseClicks = new ConcurrentLinkedQueue<>();
-        mouseWheelEvents = new ConcurrentLinkedQueue<>();
+
+        lastFrameMouseClicks = new ConcurrentLinkedQueue<>();
+        synchronized (this){
+            lastFrameMouseClicks.addAll(mouseClicks);
+            mouseClicks = new ConcurrentLinkedQueue<>();
+        }
+
+        lastFrameMouseWheelEvents = new ConcurrentLinkedQueue<>();
+        synchronized (this) {
+            lastFrameMouseWheelEvents.addAll(mouseWheelEvents);
+            mouseWheelEvents = new ConcurrentLinkedQueue<>();
+        }
+
         dragged = false;
         synchronized (this) {
             mouseDragOrigin = null;
         }
+
         mouseDragDistance = null;
     }
 
