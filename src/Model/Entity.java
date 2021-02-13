@@ -14,6 +14,8 @@ public abstract class Entity {
 
     String id;
 
+    boolean active = true;
+
     public Entity(World world, String entityID){
         this.world = world;
         this.id = entityID;
@@ -66,5 +68,13 @@ public abstract class Entity {
 
     public boolean removeComponent(ComponentType type){
         return (components.remove(type) != null);
+    }
+
+    public boolean isActive(){
+        return active;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
     }
 }

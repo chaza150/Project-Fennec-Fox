@@ -19,22 +19,17 @@ public class UIEntity extends Entity {
         this.width = width;
         this.height = height;
 
-        this.addComponent(new PositionComponent(20, 20));
+        this.addComponent(new PositionComponent(x, y));
 
         this.addComponent(new GraphicsComponent(0, getPainter(Color.GREEN)));
 
-        this.green = true;
 
         this.addComponent(new MouseEventComponent(mouseInter -> {
-            for(MouseEvent mouseEvent : mouseInter.getMouseClicks()) {
-                if (mouseEvent.getX() >= x && mouseEvent.getX() <= x + width && mouseEvent.getY() >= y && mouseEvent.getY() <= y + height) {
-                    if (green) {
-                        getComponent(ComponentType.GRAPHICS).setProperty("painter", getPainter(Color.BLUE));
-                    } else {
-                        getComponent(ComponentType.GRAPHICS).setProperty("painter", getPainter(Color.GREEN));
-                    }
-                    green = !green;
-                }
+            Point mouseCoords = mouseInter.getCurrentMouseCoords();
+            if(mouseInter.isMouseButtonDown(MouseEvent.BUTTON1) && (mouseCoords.getX() >= x && mouseCoords.getX() <= x + width && mouseCoords.getY() >= y && mouseCoords.getY() <= y + height)){
+                this.getComponent(ComponentType.GRAPHICS).setProperty("painter", getPainter(Color.GREEN));
+            } else {
+                this.getComponent(ComponentType.GRAPHICS).setProperty("painter", getPainter(Color.BLUE));
             }
 
         }));

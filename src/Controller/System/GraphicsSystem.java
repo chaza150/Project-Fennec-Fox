@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class GraphicsSystem extends System{
@@ -67,7 +68,7 @@ public class GraphicsSystem extends System{
 
     public void paintBuffer(Graphics g){
 
-        HashMap<Entity, Component> graphicsComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.GRAPHICS);
+        Map<Entity, Component> graphicsComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.GRAPHICS);
         for(Entity entity : graphicsComponents.keySet()){
             graphicsComponents.get(entity).<Consumer<Graphics>>getProperty("painter").accept(g);
         }

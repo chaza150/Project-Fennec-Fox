@@ -10,6 +10,7 @@ import Model.Physics.CollisionInfo;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class CollisionSystem extends System{
 
     @Override
     public void update() {
-        HashMap<Entity, ColliderComponent> colliderComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.COLLIDER);
+        Map<Entity, ColliderComponent> colliderComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.COLLIDER);
         if(colliderComponents.size() > 1) {
             Set<Collider> colliders = colliderComponents.values().stream().map(colliderComp -> colliderComp.<Collider>getProperty("collider")).collect(Collectors.toSet());
 

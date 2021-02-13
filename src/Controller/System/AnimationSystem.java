@@ -7,6 +7,7 @@ import Model.Entity;
 import Model.Transition.TransitionGraph;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AnimationSystem extends System {
 
@@ -18,7 +19,7 @@ public class AnimationSystem extends System {
 
     @Override
     public void update() {
-        HashMap<Entity, Component> animationComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.ANIMATION);
+        Map<Entity, Component> animationComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.ANIMATION);
         for (Entity entity : animationComponents.keySet()) {
             animationComponents.get(entity).<TransitionGraph>getProperty("activeTransition").apply(entity);
         }

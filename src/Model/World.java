@@ -7,6 +7,8 @@ import Model.Component.ComponentType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -52,9 +54,10 @@ public class World {
         }
     }
 
-    public <T extends Component> HashMap<Entity, T> getComponents(ComponentType type){
+    public <T extends Component> Map<Entity, T> getComponents(ComponentType type){
         if(components.containsKey(type)){
-            return (HashMap<Entity, T>)components.get(type);
+            HashMap<Entity, Component> componentsOfType = components.get(type);
+            return componentsOfType.keySet().stream().filter(e -> e.isActive()).collect(Collectors.toMap(Function.identity(), e -> (T)componentsOfType.get(e)));
         } else {
             return new HashMap<>();
         }

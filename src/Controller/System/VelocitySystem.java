@@ -7,6 +7,7 @@ import Model.Entity;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class VelocitySystem extends System{
@@ -25,7 +26,7 @@ public class VelocitySystem extends System{
 
     @Override
     public void update() {
-            HashMap<Entity, Component> velocityComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.VELOCITY);
+            Map<Entity, Component> velocityComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.VELOCITY);
             for (Entity entity : velocityComponents.keySet()) {
                 int deltaTime = entity.getComponent(ComponentType.TIMING).getProperty("deltaTime");
                 entity.getComponent(ComponentType.POSITION).apply("x", e -> (float) e + velocityComponents.get(entity).<Float>getProperty("x") * ((float)(deltaTime)/1000f));

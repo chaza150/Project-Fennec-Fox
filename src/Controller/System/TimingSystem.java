@@ -6,6 +6,7 @@ import Model.Component.ComponentType;
 import Model.Entity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class TimingSystem extends System{
 
@@ -22,7 +23,7 @@ public class TimingSystem extends System{
         deltaTime = (int)(currentTime - prevUpdateTime);
         prevUpdateTime = currentTime;
 
-        HashMap<Entity, Component> timingComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.TIMING);
+        Map<Entity, Component> timingComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.TIMING);
         if(timingComponents.size() > 0) {
             timingComponents.values().stream().forEach(e -> e.setProperty("deltaTime", deltaTime));
         }

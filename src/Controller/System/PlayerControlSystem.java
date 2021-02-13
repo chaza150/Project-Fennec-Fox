@@ -7,6 +7,7 @@ import Model.Component.ComponentType;
 import Model.Entity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerControlSystem extends System{
 
@@ -26,7 +27,7 @@ public class PlayerControlSystem extends System{
     public void update() {
         long currentTime = java.lang.System.currentTimeMillis();
         if((currentTime - lastUpdateTime) > updateTime) {
-            HashMap<Entity, Component> playerControlComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.PLAYER_CONTROL);
+            Map<Entity, Component> playerControlComponents = sysManager.<ModelSystem>getSystem(SystemType.MODEL).world.getComponents(ComponentType.PLAYER_CONTROL);
             for (Entity entity : playerControlComponents.keySet()) {
 
                 KeyboardInteraction keyboardInteraction = sysManager.<InteractionSystem>getSystem(SystemType.INTERACTION).keyboardInteraction;
